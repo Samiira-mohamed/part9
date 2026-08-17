@@ -44,15 +44,15 @@ app.post('/exercises', (req, res) => {
     return res.status(400).json({ error: 'malformatted parameters' });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dailyExercises = daily_exercises.map((item: any) => {
-    if (isNaN(Number(item))) {
-      throw new Error('malformatted');
-    }
-    return Number(item);
-  });
-
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const dailyExercises = daily_exercises.map((item: any) => {
+      if (isNaN(Number(item))) {
+        throw new Error('malformatted');
+      }
+      return Number(item);
+    });
+
     const result = calculateExercises(dailyExercises, Number(target));
     return res.json(result);
   } catch {
@@ -60,7 +60,7 @@ app.post('/exercises', (req, res) => {
   }
 });
 
-const PORT = 3003;
+const PORT = 3000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -10,16 +10,21 @@
     "calculateExercises": "tsc && node exerciseCalculator.ts",
     "start": "node index.ts",
     "dev": "concurrently \"tsc --watch\" \"node --watch index.ts\"",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@stylistic/eslint-plugin": "^2.0.0",
     "@types/express": "^5.0.0",
     "@types/node": "^26.2.0",
     "concurrently": "^9.0.0",
-    "typescript": "^7.0.2"
+    "eslint": "^9.0.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.0.0"
   },
   "dependencies": {
     "express": "^5.0.0"

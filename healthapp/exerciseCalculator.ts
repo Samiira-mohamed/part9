@@ -8,7 +8,10 @@ interface Result {
   average: number;
 }
 
-const calculateExercises = (dailyHours: number[], target: number): Result => {
+export const calculateExercises = (
+  dailyHours: number[],
+  target: number
+): Result => {
   const periodLength = dailyHours.length;
   const trainingDays = dailyHours.filter((hours) => hours > 0).length;
   const average =
@@ -26,7 +29,7 @@ const calculateExercises = (dailyHours: number[], target: number): Result => {
     ratingDescription = 'not too bad but could be better';
   } else {
     rating = 1;
-    ratingDescription = 'you need to work harder to reach your goal';
+    ratingDescription = 'bad';
   }
 
   return {
@@ -40,7 +43,9 @@ const calculateExercises = (dailyHours: number[], target: number): Result => {
   };
 };
 
-const parseExerciseArguments = (args: string[]): { target: number; dailyHours: number[] } => {
+const parseExerciseArguments = (
+  args: string[]
+): { target: number; dailyHours: number[] } => {
   if (args.length < 4) throw new Error('Not enough arguments');
 
   const values = args.slice(2);
@@ -69,5 +74,3 @@ if (process.argv[1] === import.meta.filename) {
     console.log(errorMessage);
   }
 }
-
-export default calculateExercises;

@@ -1,4 +1,4 @@
-const calculateBmi = (height: number, weight: number): string => {
+export const calculateBmi = (height: number, weight: number): string => {
   const heightInMeters = height / 100;
   const bmi = weight / (heightInMeters * heightInMeters);
 
@@ -39,5 +39,3 @@ if (process.argv[1] === import.meta.filename) {
     console.log(errorMessage);
   }
 }
-
-export default calculateBmi;

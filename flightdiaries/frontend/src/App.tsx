@@ -3,6 +3,9 @@ import axios from 'axios';
 import type { DiaryEntry, Weather, Visibility } from './types';
 import diaryService from './services/diaryService';
 
+const weathers: Weather[] = ['sunny', 'rainy', 'cloudy', 'windy', 'stormy'];
+const visibilities: Visibility[] = ['great', 'good', 'ok', 'poor'];
+
 const App = () => {
   const [diaries, setDiaries] = useState<DiaryEntry[]>([]);
   const [date, setDate] = useState('');
@@ -60,27 +63,44 @@ const App = () => {
         <div>
           date
           <input
-            type="text"
+            type="date"
             value={date}
             onChange={(event) => setDate(event.target.value)}
           />
         </div>
+
         <div>
-          weather
-          <input
-            type="text"
-            value={weather}
-            onChange={(event) => setWeather(event.target.value as Weather)}
-          />
+          visibility:
+          {visibilities.map((v) => (
+            <span key={v}>
+              {v}
+              <input
+                type="radio"
+                name="visibility"
+                value={v}
+                checked={visibility === v}
+                onChange={() => setVisibility(v)}
+              />
+            </span>
+          ))}
         </div>
+
         <div>
-          visibility
-          <input
-            type="text"
-            value={visibility}
-            onChange={(event) => setVisibility(event.target.value as Visibility)}
-          />
+          weather:
+          {weathers.map((w) => (
+            <span key={w}>
+              {w}
+              <input
+                type="radio"
+                name="weather"
+                value={w}
+                checked={weather === w}
+                onChange={() => setWeather(w)}
+              />
+            </span>
+          ))}
         </div>
+
         <div>
           comment
           <input

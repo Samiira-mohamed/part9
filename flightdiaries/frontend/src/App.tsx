@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import type { DiaryEntry, Weather, Visibility } from './types';
 import diaryService from './services/diaryService';
 
@@ -8,6 +9,7 @@ const App = () => {
   const [weather, setWeather] = useState<Weather>('sunny');
   const [visibility, setVisibility] = useState<Visibility>('great');
   const [comment, setComment] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     diaryService.getAll().then(data => {
@@ -25,12 +27,33 @@ const App = () => {
         setWeather('sunny');
         setVisibility('great');
         setComment('');
+        setErrorMessage('');
+      })
+      .catch(error => {
+        if (axios.isAxiosError(error)) {
+          if (error.response && error.response.data) {
+            setErrorMessage(JSON.stringify(error.response.data));
+          } else {
+            setErrorMessage('Something went wrong');
+          }
+        } else {
+          setErrorMessage('Unknown error occurred');
+        }
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 5000);
       });
   };
 
   return (
     <div>
       <h1>Flight diaries</h1>
+
+      {errorMessage && (
+        <div style={{ color: 'red', border: '1px solid red', padding: '10px', marginBottom: '10px' }}>
+          {errorMessage}
+        </div>
+      )}
 
       <h2>Add new entry</h2>
       <form onSubmit={addDiary}>

@@ -8,7 +8,21 @@ const patients: Patient[] = [
     ssn: "090786-122X",
     gender: "male",
     occupation: "New york city cop",
-    entries: []
+    entries: [
+      {
+        id: "d811e46d-70b3-4d90-b090-4535c7cf8fb1",
+        date: "2015-01-02",
+        specialist: "MD House",
+        type: "Hospital",
+        diagnosisCodes: ["S62.5"],
+        description:
+          "Healing time appr. 2 weeks. patient doesn't remember how he got the injury.",
+        discharge: {
+          date: "2015-01-16",
+          criteria: "Thumb has healed.",
+        },
+      },
+    ],
   },
   {
     id: "d2773598-f723-11e9-8f0b-362b9e155667",
@@ -17,7 +31,30 @@ const patients: Patient[] = [
     ssn: "300179-77A",
     gender: "male",
     occupation: "Cop",
-    entries: []
+    entries: [
+      {
+        id: "fcd59fa6-c4b4-4fec-ac4d-df4fe1f85f62",
+        date: "2019-08-05",
+        specialist: "MD House",
+        type: "OccupationalHealthcare",
+        employerName: "HyPD",
+        diagnosisCodes: ["Z57.1", "Z74.3", "M51.2"],
+        description:
+          "Patient mistakenly found himself in a nuclear plant waste site without protection gear. Very minor radiation poisoning.",
+        sickLeave: {
+          startDate: "2019-08-05",
+          endDate: "2019-08-28",
+        },
+      },
+      {
+        id: "fcd59fa6-c4b4-4fec-ac4d-df4fe1f85f61",
+        date: "2019-07-01",
+        specialist: "MD House",
+        type: "HealthCheck",
+        healthCheckRating: 0,
+        description: "Yearly control visit",
+      },
+    ],
   },
   {
     id: "d27736ec-f723-11e9-8f0b-362b9e155667",
@@ -26,7 +63,7 @@ const patients: Patient[] = [
     ssn: "250470-555L",
     gender: "other",
     occupation: "Technician",
-    entries: []
+    entries: [],
   },
   {
     id: "d2773822-f723-11e9-8f0b-362b9e155667",
@@ -35,7 +72,7 @@ const patients: Patient[] = [
     ssn: "050174-432N",
     gender: "female",
     occupation: "Forensic Pathologist",
-    entries: []
+    entries: [],
   },
   {
     id: "d2773c6e-f723-11e9-8f0b-362b9e155667",
@@ -44,8 +81,21 @@ const patients: Patient[] = [
     ssn: "090471-8890",
     gender: "male",
     occupation: "Digital evangelist",
-    entries: []
-  }
+    entries: [
+      {
+        id: "fcd59fa6-c4b4-4fec-ac4d-df4fe1f85f68",
+        date: "2015-01-02",
+        specialist: "MD House",
+        type: "Hospital",
+        diagnosisCodes: ["H54.9", "Z95.1"],
+        description: "Patient found unconscious in own house.",
+        discharge: {
+          date: "2015-01-16",
+          criteria: "Recovered from unconsciousness.",
+        },
+      },
+    ],
+  },
 ];
 
 export default patients;

@@ -4,10 +4,14 @@ import { Typography } from '@mui/material';
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
 import TransgenderIcon from '@mui/icons-material/Transgender';
-import { Patient, Gender, Entry } from "../../types";
+import { Patient, Gender, Entry, Diagnosis } from "../../types";
 import patientService from "../../services/patients";
 
-const PatientPage = () => {
+interface Props {
+  diagnoses: Diagnosis[];
+}
+
+const PatientPage = ({ diagnoses }: Props) => {
   const { id } = useParams<{ id: string }>();
   const [patient, setPatient] = useState<Patient | null>(null);
 
@@ -38,6 +42,11 @@ const PatientPage = () => {
     }
   };
 
+  const findDiagnosisName = (code: string): string => {
+    const diagnosis = diagnoses.find(d => d.code === code);
+    return diagnosis ? diagnosis.name : code;
+  };
+
   return (
     <div>
       <Typography variant="h4">
@@ -54,7 +63,7 @@ const PatientPage = () => {
           <p>{entry.date} <i>{entry.description}</i></p>
           <ul>
             {entry.diagnosisCodes?.map(code => (
-              <li key={code}>{code}</li>
+              <li key={code}>{code} {findDiagnosisName(code)}</li>
             ))}
           </ul>
         </div>

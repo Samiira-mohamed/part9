@@ -4,8 +4,9 @@ import { Typography } from '@mui/material';
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
 import TransgenderIcon from '@mui/icons-material/Transgender';
-import { Patient, Gender, Entry, Diagnosis } from "../../types";
+import { Patient, Gender, Diagnosis } from "../../types";
 import patientService from "../../services/patients";
+import EntryDetails from "./EntryDetails";
 
 interface Props {
   diagnoses: Diagnosis[];
@@ -42,11 +43,6 @@ const PatientPage = ({ diagnoses }: Props) => {
     }
   };
 
-  const findDiagnosisName = (code: string): string => {
-    const diagnosis = diagnoses.find(d => d.code === code);
-    return diagnosis ? diagnosis.name : code;
-  };
-
   return (
     <div>
       <Typography variant="h4">
@@ -58,15 +54,8 @@ const PatientPage = ({ diagnoses }: Props) => {
       <Typography variant="h6" sx={{ marginTop: "1em" }}>
         entries
       </Typography>
-      {patient.entries.map((entry: Entry) => (
-        <div key={entry.id} style={{ border: "1px solid black", borderRadius: "5px", padding: "0.5em", marginTop: "0.5em" }}>
-          <p>{entry.date} <i>{entry.description}</i></p>
-          <ul>
-            {entry.diagnosisCodes?.map(code => (
-              <li key={code}>{code} {findDiagnosisName(code)}</li>
-            ))}
-          </ul>
-        </div>
+      {patient.entries.map(entry => (
+        <EntryDetails key={entry.id} entry={entry} diagnoses={diagnoses} />
       ))}
     </div>
   );

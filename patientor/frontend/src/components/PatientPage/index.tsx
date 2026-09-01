@@ -76,7 +76,7 @@ const PatientPage = ({ diagnoses }: Props) => {
       <p>occupation: {patient.occupation}</p>
 
       {showForm && (
-        <AddEntryForm onSubmit={submitNewEntry} error={error} />
+        <AddEntryForm onSubmit={submitNewEntry} error={error} diagnoses={diagnoses} />
       )}
       <Button
         variant="contained"

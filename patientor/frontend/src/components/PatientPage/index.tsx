@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Typography } from '@mui/material';
+import axios from "axios";
+import { Typography, Button } from '@mui/material';
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
 import TransgenderIcon from '@mui/icons-material/Transgender';
-import { Patient, Gender, Diagnosis } from "../../types";
+import { Patient, Gender, Diagnosis, NewEntry } from "../../types";
 import patientService from "../../services/patients";
 import EntryDetails from "./EntryDetails";
+import AddEntryForm from "./AddEntryForm";
 
 interface Props {
   diagnoses: Diagnosis[];
@@ -15,6 +17,8 @@ interface Props {
 const PatientPage = ({ diagnoses }: Props) => {
   const { id } = useParams<{ id: string }>();
   const [patient, setPatient] = useState<Patient | null>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [error, setError] = useState<string>();
 
   useEffect(() => {
     const fetchPatient = async () => {
@@ -43,6 +47,26 @@ const PatientPage = ({ diagnoses }: Props) => {
     }
   };
 
+  const submitNewEntry = async (values: NewEntry) => {
+    if (!id) return;
+    try {
+      const newEntry = await patientService.addEntry(id, values);
+      setPatient({ ...patient, entries: patient.entries.concat(newEntry) });
+      setShowForm(false);
+      setError(undefined);
+    } catch (e: unknown) {
+      if (axios.isAxiosError(e)) {
+        if (e?.response?.data) {
+          setError(JSON.stringify(e.response.data));
+        } else {
+          setError("Unrecognized axios error");
+        }
+      } else {
+        setError("Unknown error");
+      }
+    }
+  };
+
   return (
     <div>
       <Typography variant="h4">
@@ -50,6 +74,17 @@ const PatientPage = ({ diagnoses }: Props) => {
       </Typography>
       <p>ssn: {patient.ssn}</p>
       <p>occupation: {patient.occupation}</p>
+
+      {showForm && (
+        <AddEntryForm onSubmit={submitNewEntry} error={error} />
+      )}
+      <Button
+        variant="contained"
+        style={{ marginTop: "1em" }}
+        onClick={() => setShowForm(!showForm)}
+      >
+        {showForm ? "Cancel" : "Add New Entry"}
+      </Button>
 
       <Typography variant="h6" sx={{ marginTop: "1em" }}>
         entries
